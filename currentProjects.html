@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Portfolio</title>
+        <meta name="description" content="A website to host my Portfolio">
+        <link rel="stylesheet" href="style.css">
+</head>
+ <body>
+        
+     <header>
+     
+        <div class="row">
+            <ul class="main-nav">
+                
+                <li><a href="index.html">Home</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="https://github.com/danny10846"target="_blank">GitHub</a></li>
+                <li class="active"><a href="currentProjects.html">Current Projects</a></li>
+            
+            
+            </ul>
+            
+         </div>
+     </header>
+
+     <div class="game">
+     <script>
+         window.onload = function(){
+
+            var canvas = document.createElement("canvas"),
+                c = canvas.getContext("2d");
+                particles = {},
+                particleIndex = 0,
+                particleNum = 1;
+            
+            canvas.width = 600;
+            canvas.height = 600;
+            canvas.tabindex = 0;
+            canvas.setAttribute('style', "position: absolute; left: 370px; top: 70px; margin-left:2%; margin-top:2%;");
+
+            document.body.appendChild(canvas);
+
+            c.fillStyle = "black";
+            c.fillRect(0,0,canvas.width,canvas.height);
+
+            function Particle(){
+                this.posX = canvas.width / 2;
+                this.posY = canvas.height / 2;
+
+                this.velocityX = Math.random() * 10 - 5;
+                this.velocityY = Math.random() * 10 - 10;
+                this.gravity = 0.3;
+                this.life = 0;
+                this.maxLife = 100;
+                this.colour = "rgb("+parseInt(Math.random()*255, 10)+","+
+                parseInt(Math.random()*255, 10)+","
+                +parseInt(Math.random()*255, 10)+")";
+
+
+                particleIndex++;
+                particles[particleIndex] = this;
+                this.id = particleIndex;
+            }
+
+            Particle.prototype.draw = function(){
+                this.posX += this.velocityX;
+                this.posY += this.velocityY;
+                this.velocityY += this.gravity;
+                this.life++;
+                
+                if(this.life >= this.maxLife){
+                    delete particles[this.id];
+                }
+
+                if(this.posY > 500){
+                    this.velocityY *= -0.5;
+                    this.velocityX *= 0.9;
+                    this.posY = 500;
+                    
+                }
+                c.beginPath();
+                c.fillStyle = this.colour;
+                c.arc(this.posX, this.posY, 5,0,Math.PI*2,true);
+                c.closePath;
+                c.fill();
+            };
+
+            
+
+            setInterval(function(){
+                c.fillStyle = "black";
+                c.fillRect(0,0,canvas.width,canvas.height);
+
+                for (var i = 0; i < particleNum; i++){
+                new Particle();
+                }
+                for (var i in particles){
+                    particles[i].draw();
+                }
+            }, 30);
+
+         };
+     </script>
+     </div>
+     
+    </body>
+</html>
