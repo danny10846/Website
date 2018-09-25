@@ -31,6 +31,9 @@
 
             var canvas = document.createElement("canvas"),
                 c = canvas.getContext("2d");
+                particles = {},
+                particleIndex = 0,
+                particleNum = 1;
             
             canvas.width = 600;
             canvas.height = 600;
@@ -42,30 +45,60 @@
             c.fillStyle = "black";
             c.fillRect(0,0,canvas.width,canvas.height);
 
-            var posX = 20,
-                posY = canvas.height / 2,
-                velocityX = 5,
-                velocityY = -10;
-                gravity = 1;
+            function Particle(){
+                this.posX = canvas.width / 2;
+                this.posY = canvas.height / 2;
+
+                this.velocityX = Math.random() * 10 - 5;
+                this.velocityY = Math.random() * 10 - 10;
+                this.gravity = 0.3;
+                this.life = 0;
+                this.maxLife = 100;
+                this.colour = "rgb("+parseInt(Math.random()*255, 10)+","+
+                parseInt(Math.random()*255, 10)+","
+                +parseInt(Math.random()*255, 10)+")";
+
+
+                particleIndex++;
+                particles[particleIndex] = this;
+                this.id = particleIndex;
+            }
+
+            Particle.prototype.draw = function(){
+                this.posX += this.velocityX;
+                this.posY += this.velocityY;
+                this.velocityY += this.gravity;
+                this.life++;
+                
+                if(this.life >= this.maxLife){
+                    delete particles[this.id];
+                }
+
+                if(this.posY > 500){
+                    this.velocityY *= -0.5;
+                    this.velocityX *= 0.9;
+                    this.posY = 500;
+                    
+                }
+                c.beginPath();
+                c.fillStyle = this.colour;
+                c.arc(this.posX, this.posY, 5,0,Math.PI*2,true);
+                c.closePath;
+                c.fill();
+            };
+
             
+
             setInterval(function(){
                 c.fillStyle = "black";
                 c.fillRect(0,0,canvas.width,canvas.height);
-                posX += velocityX;
-                posY += velocityY;
-                
-                if (posY > 500){
-                    velocityY *= -0.5;
-                    velocityX *= 0.9;
-                    posY = 500;
-                    
+
+                for (var i = 0; i < particleNum; i++){
+                new Particle();
                 }
-
-                velocityY += gravity;
-
-                c.fillStyle = "white";
-                c.fillRect(posX,posY, 10, 10);
-
+                for (var i in particles){
+                    particles[i].draw();
+                }
             }, 30);
 
          };
