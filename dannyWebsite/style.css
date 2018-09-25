@@ -4,7 +4,7 @@
 }
 
 header{
-    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(woods.jpg);
+    
     height: 100vh;
     background-size: cover;
     background-position: center;
@@ -36,6 +36,7 @@ header{
 }
 
 body{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(woods.jpg);
     font-family: monospace;
 }
 
@@ -64,4 +65,44 @@ h2{
     color:white;
     text-align: center;
     
+}
+
+.card{
+    position:absolute;
+    left: 5px;
+    top: 100px;
+    width: 1200px;
+    margin-left:2%;
+    margin-top:2%;
+    border: 1px solid black;
+    border-radius: 1px;
+    padding-right: 5px;
+}
+
+
+.date{
+    padding-left:5px;
+}
+
+.entryHeading{
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.entryHeading > h2{
+    text-align: left;
+}
+
+.entry{
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.game{
+    position: absolute;
+    left: 5px;
+    top: 100px;
+    margin-left:2%;
+    margin-top:2%;
+    z-index: 100;
 }
